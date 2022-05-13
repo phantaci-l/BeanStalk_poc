@@ -30,10 +30,16 @@ module.exports = {
     local: {
       url: 'http://127.0.0.1:8545',
     },
+    // hardhat: {
+    //   forking: {
+    //     url: "https://eth-mainnet.alchemyapi.io/v2/axyTMpOt1jPOBxtPvD0TcHCbpwwT60U-",
+    //     blockNumber: 14602789
+    //   }
+    // },
     hardhat: {
       forking: {
-        url: "https://eth-mainnet.alchemyapi.io/v2/axyTMpOt1jPOBxtPvD0TcHCbpwwT60U-",
-        blockNumber: 14602789
+        url: "https://bsc-mainnet.nodereal.io/v1/1005333b090f46aa9edb747e3fa5235a",
+        blockNumber: 17634617
       }
     }
   },

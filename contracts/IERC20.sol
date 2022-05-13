@@ -84,3 +84,8 @@ interface IERC20 {
 interface IUSDT {
     function approve(address _spender, uint256 _value) external;
 }
+
+interface IARTH{
+    function deposit(uint256 amount) external returns (bool);
+    function approve(address spender, uint256 amount) external returns (bool);
+}
