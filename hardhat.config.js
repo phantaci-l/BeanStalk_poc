@@ -44,8 +44,8 @@ module.exports = {
     // }
     hardhat: {
       forking: {
-        url: "https://bsc-mainnet.nodereal.io/v1/1005333b090f46aa9edb747e3fa5235a",             //fortress
-        blockNumber: 17248705
+        url: "https://bsc-mainnet.nodereal.io/v1/95e1e8119e3e472281baaf7e53a5288f",             //fortress
+        blockNumber: 17832802
       }
     }
   },
