@@ -20,14 +20,15 @@ async function main() {
 
 
   // const LUSD = await ethers.getContractFactory("MON_poc");
-  const LUSD = await ethers.getContractFactory("flash_loan");
+  const LUSD = await ethers.getContractFactory("mev_bot");
   const LUSD_test = await LUSD.deploy();
   await LUSD_test.deployed();
   console.log("FTS_exploit_test deployed to:", LUSD_test.address);
 
 
-  await LUSD_test.set_approve_token();
-  await LUSD_test.flashloan_from_DDAP();
+  // await LUSD_test.set_approve_token();
+  // await LUSD_test.flashloan_from_DDAP();
+  await LUSD_test.flashloan_from_balancer();
 }
 
 // We recommend this pattern to be able to use async/await everywhere

