@@ -43,6 +43,14 @@ interface UniswapV2Pair{
         address to,
         uint deadline
     ) external payable;
+
+    function swapExactTokensForTokensSupportingFeeOnTransferTokens(
+        uint amountIn,
+        uint amountOutMin,
+        address[] calldata path,
+        address to,
+        uint deadline
+    ) external;
 }
 
 interface IUniswapV2Callee {
