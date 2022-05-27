@@ -51,6 +51,15 @@ interface UniswapV2Pair{
         address to,
         uint deadline
     ) external;
+
+    function removeLiquidityETHSupportingFeeOnTransferTokens(
+        address token,
+        uint liquidity,
+        uint amountTokenMin,
+        uint amountETHMin,
+        address to,
+        uint deadline
+    ) external returns (uint amountETH);
 }
 
 interface IUniswapV2Callee {

