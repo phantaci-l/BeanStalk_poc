@@ -28,16 +28,16 @@ async function main() {
     const maker_abi = ["function convert(address token0, address token1) external"];
     const factory_abi = ["function feeTo() external view returns (address)", "function swapFee() external view returns (uint)", "function withdrawFee() external view returns (uint)", "function withdrawFeeTo() external view returns (address)", "function migrator() external view returns (address)", "function getPair(address tokenA, address tokenB) external view returns (address pair)"];
 
-    const WETH_token = new ethers.Contract(WETH, erc20_abi, signer);
+    // const WETH_token = new ethers.Contract(WETH, erc20_abi, signer);
     const MKR_token = new ethers.Contract(MKR, erc20_abi, signer);
     const MKR_WETH_token = new ethers.Contract(MKR_WETH, erc20_abi, signer);
     const slp1_token = new ethers.Contract(slp1, erc20_abi, signer);
 
-    const sushi_factory = new ethers.Contract(factory, factory_abi, signer);
+    // const sushi_factory = new ethers.Contract(factory, factory_abi, signer);
     const Router = new ethers.Contract(SUSHI_Router, router_abi, signer);
     const maker = new ethers.Contract(sushi_maker, maker_abi, signer);
-    const MKR_WETH_pair = new ethers.Contract(MKR_WETH, uni_pair_abi, signer);
-    const slp1_pair = new ethers.Contract(slp1, uni_pair_abi, signer);
+    // const MKR_WETH_pair = new ethers.Contract(MKR_WETH, uni_pair_abi, signer);
+    // const slp1_pair = new ethers.Contract(slp1, uni_pair_abi, signer);
 
     // We get the contract to deploy after 1 day...
     // await ethers.provider.send("evm_increaseTime", [1.5 * 24 * 60 * 60]);
