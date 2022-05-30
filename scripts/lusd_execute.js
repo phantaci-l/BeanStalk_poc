@@ -20,7 +20,7 @@ async function main() {
 
 
   // const LUSD = await ethers.getContractFactory("MON_poc");
-  const LUSD = await ethers.getContractFactory("HackerDao_Poc");
+  const LUSD = await ethers.getContractFactory("novo_poc");
   const LUSD_test = await LUSD.deploy();
   await LUSD_test.deployed();
   console.log("LUSD_test deployed to:", LUSD_test.address);
@@ -28,7 +28,7 @@ async function main() {
 
   // await LUSD_test.set_approve_token();
   // await LUSD_test.flashloan_from_DDAP();
-  await LUSD_test.flashloan_from_DDAP();
+  await LUSD_test.pancake_swap();
 }
 
 // We recommend this pattern to be able to use async/await everywhere

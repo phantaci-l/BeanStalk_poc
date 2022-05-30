@@ -30,18 +30,18 @@ module.exports = {
     local: {
       url: 'http://127.0.0.1:8545',
     },
-    hardhat: {
-      forking: {
-        url: "https://eth-mainnet.alchemyapi.io/v2/axyTMpOt1jPOBxtPvD0TcHCbpwwT60U-",        //beanstalk
-        blockNumber: 11720113
-      }
-    },
     // hardhat: {
     //   forking: {
-    //     url: "https://bsc-mainnet.nodereal.io/v1/1005333b090f46aa9edb747e3fa5235a",             //fortress
-    //     blockNumber: 17634617
+    //     url: "https://eth-mainnet.alchemyapi.io/v2/axyTMpOt1jPOBxtPvD0TcHCbpwwT60U-",        //beanstalk
+    //     blockNumber: 11720113
     //   }
-    // }
+    // },
+    hardhat: {
+      forking: {
+        url: "https://bsc-mainnet.nodereal.io/v1/1005333b090f46aa9edb747e3fa5235a",             //fortress
+        blockNumber: 18225002
+      }
+    }
     // hardhat: {
     //   forking: {
     //     url: "https://bsc-mainnet.nodereal.io/v1/95e1e8119e3e472281baaf7e53a5288f",             //fortress
